@@ -1,0 +1,225 @@
+{
+  "metadata": {
+    "generated_at": "2025-12-24T19:34:36.909738",
+    "analyzer_version": "1.0.0",
+    "error_threshold": 10,
+    "error_rate_threshold": 0.5
+  },
+  "statistics": {
+    "summary": {
+      "total_requests": 75,
+      "unique_ips": 35,
+      "unique_endpoints": 55,
+      "unique_status_codes": 8,
+      "suspicious_ips_count": 3
+    },
+    "http_methods": {
+      "GET": 58,
+      "POST": 15,
+      "DELETE": 1,
+      "PUT": 1
+    },
+    "status_codes": {
+      "breakdown": {
+        "200": 37,
+        "404": 12,
+        "500": 12,
+        "413": 10,
+        "403": 1,
+        "201": 1,
+        "302": 1,
+        "204": 1
+      },
+      "summary": {
+        "2xx_success": 39,
+        "3xx_redirect": 1,
+        "4xx_client_error": 23,
+        "5xx_server_error": 12
+      }
+    },
+    "top_endpoints": [
+      {
+        "endpoint": "/api/data",
+        "requests": 12
+      },
+      {
+        "endpoint": "/api/upload",
+        "requests": 10
+      },
+      {
+        "endpoint": "/index.html",
+        "requests": 1
+      },
+      {
+        "endpoint": "/about.html",
+        "requests": 1
+      },
+      {
+        "endpoint": "/api/login",
+        "requests": 1
+      },
+      {
+        "endpoint": "/css/style.css",
+        "requests": 1
+      },
+      {
+        "endpoint": "/admin/panel",
+        "requests": 1
+      },
+      {
+        "endpoint": "/products",
+        "requests": 1
+      },
+      {
+        "endpoint": "/products/item/123",
+        "requests": 1
+      },
+      {
+        "endpoint": "/search?q=laptop",
+        "requests": 1
+      },
+      {
+        "endpoint": "/js/app.js",
+        "requests": 1
+      },
+      {
+        "endpoint": "/wp-admin",
+        "requests": 1
+      },
+      {
+        "endpoint": "/administrator",
+        "requests": 1
+      },
+      {
+        "endpoint": "/phpmyadmin",
+        "requests": 1
+      },
+      {
+        "endpoint": "/api/users",
+        "requests": 1
+      },
+      {
+        "endpoint": "/contact",
+        "requests": 1
+      },
+      {
+        "endpoint": "/blog",
+        "requests": 1
+      },
+      {
+        "endpoint": "/blog/post/1",
+        "requests": 1
+      },
+      {
+        "endpoint": "/api/products",
+        "requests": 1
+      },
+      {
+        "endpoint": "/admin.php",
+        "requests": 1
+      }
+    ],
+    "top_ips": [
+      {
+        "ip": "45.67.89.123",
+        "requests": 12
+      },
+      {
+        "ip": "77.88.99.111",
+        "requests": 12
+      },
+      {
+        "ip": "88.99.77.66",
+        "requests": 10
+      },
+      {
+        "ip": "192.168.1.100",
+        "requests": 8
+      },
+      {
+        "ip": "10.0.0.50",
+        "requests": 2
+      },
+      {
+        "ip": "10.0.0.51",
+        "requests": 2
+      },
+      {
+        "ip": "192.168.1.101",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.102",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.103",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.104",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.105",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.106",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.107",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.108",
+        "requests": 1
+      },
+      {
+        "ip": "10.0.0.52",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.109",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.110",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.111",
+        "requests": 1
+      },
+      {
+        "ip": "10.0.0.53",
+        "requests": 1
+      },
+      {
+        "ip": "192.168.1.112",
+        "requests": 1
+      }
+    ],
+    "suspicious_ips": [
+      {
+        "ip": "45.67.89.123",
+        "total_requests": 12,
+        "errors": 12,
+        "error_rate": 1.0
+      },
+      {
+        "ip": "77.88.99.111",
+        "total_requests": 12,
+        "errors": 12,
+        "error_rate": 1.0
+      },
+      {
+        "ip": "88.99.77.66",
+        "total_requests": 10,
+        "errors": 10,
+        "error_rate": 1.0
+      }
+    ]
+  }
+}
