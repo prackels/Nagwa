@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .error {
+            background-color: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c33;
+        }
+
+        .info {
+            background-color: #e7f3ff;
+            color: #0066cc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0066cc;
+        }
+
+        .info strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .info li {
+            margin-bottom: 5px;
+        }
+
+        .location-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .location-info h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .location-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .location-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .location-item strong {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .weather-main {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dynamic weather backgrounds */
+        .weather-main.clear {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+        }
+
+        .weather-main.clouds {
+            background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+        }
+
+        .weather-main.rain,
+        .weather-main.drizzle {
+            background: linear-gradient(135deg, #4b79a1 0%, #283e51 100%);
+        }
+
+        .weather-main.thunderstorm {
+            background: linear-gradient(135deg, #373b44 0%, #4286f4 100%);
+        }
+
+        .weather-main.snow {
+            background: linear-gradient(135deg, #e6f4f1 0%, #a7c5bd 100%);
+            color: #2c3e50;
+        }
+
+        .weather-main.mist,
+        .weather-main.fog,
+        .weather-main.haze {
+            background: linear-gradient(135deg, #b5b5b5 0%, #757575 100%);
+        }
+
+        .weather-icon {
+            font-size: 120px;
+            margin: 0 auto 20px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            line-height: 1;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .temperature {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1.5em;
+            text-transform: capitalize;
+            margin-bottom: 10px;
+        }
+
+        .feels-like {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .detail-icon {
+            font-size: 1.2em;
+        }
+
+        .detail-value {
+            color: #333;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .detail-unit {
+            font-size: 0.7em;
+            color: #6c757d;
+            margin-left: 4px;
+        }
+
+        .weather-condition-icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .temperature {
+                font-size: 3em;
+            }
+
+            .weather-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+
+        {% if error_message %}
+            <div class="error">
+                <strong>Error:</strong>
+                {{ error_message }}
+            </div>
+
+            {% if 'localhost' in error_message or 'private IP' in error_message %}
+                <div class="info">
+                    <strong>Testing Locally?</strong>
+                    <p>Since you're accessing from localhost, we can't determine your real location. To test the full functionality:</p>
+                    <ul>
+                        <li>Deploy the app to a public server</li>
+                        <li>Use a VPN or proxy with a public IP</li>
+                        <li>Access the app from a mobile device using cellular data</li>
+                        <li>Manually test by passing coordinates in the URL (feature can be added)</li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% if location_info %}
+            <div class="location-info">
+                <h2>Your Location</h2>
+                <div class="location-details">
+                    <div class="location-item">
+                        <strong>City</strong>
+                        <div>{{ location_info.city }}</div>
+                    </div>
+                    <div class="location-item">
+                        <strong>Region</strong>
+                        <div>{{ location_info.region }}</div>
+                    </div>
+                    <div class="location-item">
+                        <strong>Country</strong>
+                        <div>{{ location_info.country }}</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if weather_data %}
+            <div class="weather-main {{ weather_data.weather.0.main|lower }}">
+                <div class="weather-icon">
+                    {% if weather_data.weather.0.main == 'Clear' %}
+                        ☀️
+                    {% elif weather_data.weather.0.main == 'Clouds' %}
+                        ☁️
+                    {% elif weather_data.weather.0.main == 'Rain' %}
+                        🌧️
+                    {% elif weather_data.weather.0.main == 'Drizzle' %}
+                        🌦️
+                    {% elif weather_data.weather.0.main == 'Thunderstorm' %}
+                        ⛈️
+                    {% elif weather_data.weather.0.main == 'Snow' %}
+                        ❄️
+                    {% elif weather_data.weather.0.main == 'Mist' or weather_data.weather.0.main == 'Fog' or weather_data.weather.0.main == 'Haze' %}
+                        🌫️
+                    {% else %}
+                        🌤️
+                    {% endif %}
+                </div>
+
+                <div class="temperature">
+                    {{ weather_data.main.temp|floatformat:1 }}<span style="font-size: 0.5em;">°C</span>
+                </div>
+
+                <div class="description">
+                    {{ weather_data.weather.0.description|title }}
+                </div>
+
+                <div class="feels-like">
+                    Feels like {{ weather_data.main.feels_like|floatformat:1 }}°C
+                </div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">💧</span>
+                        Humidity
+                    </div>
+                    <div class="detail-value">
+                        {{ weather_data.main.humidity }}<span class="detail-unit">%</span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">💨</span>
+                        Wind Speed
+                    </div>
+                    <div class="detail-value">
+                        {{ weather_data.wind.speed }}<span class="detail-unit">m/s</span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">🌡️</span>
+                        Pressure
+                    </div>
+                    <div class="detail-value">
+                        {{ weather_data.main.pressure }}<span class="detail-unit">hPa</span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">👁️</span>
+                        Visibility
+                    </div>
+                    <div class="detail-value">
+                        {% widthratio weather_data.visibility 1000 1 %}<span class="detail-unit">km</span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">☁️</span>
+                        Cloudiness
+                    </div>
+                    <div class="detail-value">
+                        {{ weather_data.clouds.all }}<span class="detail-unit">%</span>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <span class="detail-icon">🌡️</span>
+                        Min / Max Temp
+                    </div>
+                    <div class="detail-value" style="font-size: 1.3em;">
+                        {{ weather_data.main.temp_min|floatformat:1 }} / {{ weather_data.main.temp_max|floatformat:1 }}<span class="detail-unit">°C</span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
